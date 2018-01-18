@@ -2,7 +2,7 @@
 # SOURCE CODE
 # ********************************************************
 
-setwd("D:/Dropbox/Yassin/ESILV/A4/RESEARCH/R/LinkedDataClustering") # To use relative paths, and set the working directory appropriately, use setwd() to point R/RStudio at the directory that contains these files.
+setwd("D:/MesDocuments/ESILVA4/Parcours_Recherche/Code/R/LinkedDataClustering") # To use relative paths, and set the working directory appropriately, use setwd() to point R/RStudio at the directory that contains these files.
 #source("functions.R")
 #source("application_global.R")
 

@@ -2,7 +2,7 @@
 # SOURCE CODE
 # ********************************************************
 
-setwd("D:/Dropbox/Yassin/ESILV/A4/RESEARCH/R/LinkedDataClustering") # To use relative paths, and set the working directory appropriately, use setwd() to point R/RStudio at the directory that contains these files.
+setwd("D:/MesDocuments/ESILVA4/Parcours_Recherche/Code/R/LinkedDataClustering") # To use relative paths, and set the working directory appropriately, use setwd() to point R/RStudio at the directory that contains these files.
 #source("functions.R")
 source("classes.R")
 
@@ -26,15 +26,32 @@ endpoint <- "http://dbpedia.org/sparql"
 # SPARQL QUERY
 # ********************************************************
 
+# query <- "PREFIX db: <http://dbpedia.org/resource/>
+# PREFIX dbo: <http://dbpedia.org/ontology/>
+# SELECT DISTINCT ?oeuvre
+# WHERE {
+# ?oeuvre dbo:author ?j.
+# #?oeuvre rdfs:label ?titre.
+# ?oeuvre rdf:type  dbo:Book.
+# } LIMIT 20"
+
+# query <-"PREFIX db: <http://dbpedia.org/resource/>
+# PREFIX dbo: <http://dbpedia.org/ontology/>
+# select distinct ?g
+# where {
+# ?g rdfs:label ?y
+# FILTER(regex(?y, 'Jaguar', 'i'))
+# } LIMIT 30
+# "
+
+
 query <- "PREFIX db: <http://dbpedia.org/resource/>
 PREFIX dbo: <http://dbpedia.org/ontology/>
-SELECT DISTINCT ?oeuvre
-WHERE {
-?oeuvre dbo:author ?j.
-#?oeuvre rdfs:label ?titre.
-?oeuvre rdf:type  dbo:Book.
-} LIMIT 10"
-
+select distinct ?g
+where {
+?g rdfs:label ?y
+FILTER(regex(?y, 'Titanic', 'i'))
+} LIMIT 30"
 
 
 
@@ -91,6 +108,27 @@ RequestNeighborhood<-function(QueryResult, endpoint){
     results <- QueryResultFrame$results # ici nous aurons que les résultats de SELECT
   }
   return (results)
+}
+
+RequestNeighborhoodSameAs<-function(QueryResult1, endpoint){
+  QueryResultV1 <-""
+  
+  if (grepl("%", QueryResult1) ){
+    
+  }
+  else{
+    queryvoisinage <- paste("SELECT DISTINCT ?b ?c
+                            WHERE{",
+                            QueryResult1, "?b ?c.
+                            FILTER ( regex (?b, 'sameAs', 'i'))}")
+    
+    QueryResultV <- SPARQL(endpoint, queryvoisinage)  # pour chaque résultat de la requete initiale
+    
+    if(!(is.data.frame(QueryResultV$results) && nrow(QueryResultV$results)==0)){
+      QueryResultV1 <- QueryResultV$results # ici nous aurons que les résultats de SELECT
+    }
+  }
+  return (QueryResultV1)
 }
 #obj <- list_of_subjects[[1]] 
 #results <- RequestNeighborhood(obj@name, endpoint)
