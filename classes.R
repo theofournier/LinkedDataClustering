@@ -51,3 +51,29 @@ Link <- setClass(
     return(TRUE)
   }
 )
+
+contains <- function (list_of_objects , item){ 
+  if(length(list_of_objects) > 0){
+    for( i in 1:length(list_of_objects)){
+      if(identical(list_of_objects[[i]], item)){
+        return(TRUE)
+      }
+    }
+  }
+  return(FALSE)
+}
+
+containsPropertyAndObject <- function (list_of_link , link){ 
+  return(contains(list_of_link, link))
+}
+
+containsProperty <- function (list_of_link , link){
+  if(length(list_of_link) > 0){
+    for( i in 1:length(list_of_link)){
+      if(identical(list_of_link[[i]]@property, link@property)){
+        return(TRUE)
+      }
+    } 
+  }
+  return(FALSE)
+}

@@ -2,16 +2,12 @@
 # SOURCE CODE
 # ********************************************************
 
-setwd("D:/Dropbox/Yassin/ESILV/A4/RESEARCH/R") # To use relative paths, and set the working directory appropriately, use setwd() to point R/RStudio at the directory that contains these files.
+setwd("D:/Dropbox/Yassin/ESILV/A4/RESEARCH/R/LinkedDataClustering") # To use relative paths, and set the working directory appropriately, use setwd() to point R/RStudio at the directory that contains these files.
 #source("functions.R")
 source("classes.R")
 
 # installation de la librairie  SPARQL : install.packages("SPARQL")
-# installation de la librairie  FactoMineR : install.packages("FactoMineR")
-# installation de la librairie  dynamicTreeCut : install.packages("dynamicTreeCut")
 library(SPARQL)
-library(FactoMineR)
-library(dynamicTreeCut)
 
 
 
@@ -110,12 +106,13 @@ for (j in 1:length(list_of_subjects)){
   # selecting the current subject :
   subject <- list_of_subjects[[j]] 
   
+  
   # getting the subject's neighborhood :
   neighborhood <- RequestNeighborhood(subject@name, endpoint)
   
   # creating a list of links :
   list_of_links <- list()
-  
+
   # for each link in the neighborhood :
   for (i in 1:length(neighborhood[,1])){
     # we create a predicate :
@@ -130,7 +127,7 @@ for (j in 1:length(list_of_subjects)){
     # we add the link in list dedicated list :
     list_of_links[i] <- new_link
   }
-  
+
   # we affect the list to the subject :
   subject@links <- list_of_links
   
